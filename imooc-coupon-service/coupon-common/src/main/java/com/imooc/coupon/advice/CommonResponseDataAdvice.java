@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 
-//统一相应
+//统一响应  对controller的所有返回做一个效果处理
 @RestControllerAdvice
 public class CommonResponseDataAdvice implements ResponseBodyAdvice {
 
