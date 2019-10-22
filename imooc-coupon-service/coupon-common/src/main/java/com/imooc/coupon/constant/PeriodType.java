@@ -1,24 +1,23 @@
 package com.imooc.coupon.constant;
 
-//分发目标
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.stream.Stream;
 
+// 有效期类型
 @Getter
 @AllArgsConstructor
-public enum DistributeTarget {
+public enum PeriodType {
 
-    SINGLE("单用户",1),
-    MULTI("多用户",2);
+    REGULAR("固定的(固定日期)",1),
+    SHIFT("变动的(以领取之日开始计算)",2);
 
     private String description;
 
     private Integer code;
 
-    public static  DistributeTarget of(Integer code){
+    public static PeriodType of(Integer code){
         return Stream.of(values())
                 .filter(bean -> bean.code.equals(code))
                 .findAny()
