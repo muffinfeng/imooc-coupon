@@ -2,9 +2,15 @@ package com.imooc.coupon.entity;
 
 //优惠券模板实体类定义 ： 基础属性 + 规则属性
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.imooc.coupon.constant.CouponCategory;
 import com.imooc.coupon.constant.DistributeTarget;
 import com.imooc.coupon.constant.ProductLine;
+import com.imooc.coupon.converter.CouponCategoryConverter;
+import com.imooc.coupon.converter.DistributeTargetConverter;
+import com.imooc.coupon.converter.ProductLineConverter;
+import com.imooc.coupon.converter.RuleConverter;
+import com.imooc.coupon.serialization.CouponTemplateSerialize;
 import com.imooc.coupon.vo.TemplateRule;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +30,7 @@ import java.util.Date;
 @Entity
 @EntityListeners(AuditingEntityListener.class) //与创建时间字段有关
 @Table(name="coupon_template")
+@JsonSerialize(using = CouponTemplateSerialize.class)
 public class CouponTemplate implements Serializable {
 
     //自增主键
@@ -54,10 +61,12 @@ public class CouponTemplate implements Serializable {
 
     //优惠券分类
     @Column(name = "category", nullable = false)
+    @Convert(converter = CouponCategoryConverter.class)
     private CouponCategory category;
 
     //产品线
-    @Column(name = "product-line", nullable = false)
+    @Column(name = "product_line", nullable = false)
+    @Convert(converter = ProductLineConverter.class)
     private ProductLine productLine;
 
     //总数
@@ -79,10 +88,12 @@ public class CouponTemplate implements Serializable {
 
     // 目标用户
     @Column(name = "target",nullable = false)
+    @Convert(converter = DistributeTargetConverter.class)
     private DistributeTarget target;
 
     //优惠券的规则
     @Column(name = "rule",nullable = false)
+    @Convert(converter = RuleConverter.class)
     private TemplateRule rule;
 
     //自定义构造函数

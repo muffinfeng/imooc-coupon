@@ -29,7 +29,12 @@ public class TemplateRule {
     //的优惠券的唯一编码
     private String weight;
 
-
+    //校验功能
+    public boolean validate(){
+        return expiration.validate() && discount.validate()
+                && limitation > 0 && usage.validate()
+                && StringUtils.isNotEmpty(weight);
+    }
 
     //有效期期限规则
     @Data
