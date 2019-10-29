@@ -110,9 +110,14 @@ public class AsyncServiceImpl implements IAsyncService {
         String mid6 = chars.stream()
                 .map(Objects::toString).collect(Collectors.joining());
 
+
         //后八位
         String suffix8 = RandomStringUtils.random(1,bases)
                     + RandomStringUtils.randomNumeric(7);
+
+
+
+
 
         return mid6 + suffix8;
     }
