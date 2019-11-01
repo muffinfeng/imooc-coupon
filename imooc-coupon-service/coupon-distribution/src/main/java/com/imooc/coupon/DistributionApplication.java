@@ -19,4 +19,5 @@ public class DistributionApplication {
     public static void main(String[] args) {
         SpringApplication.run(DistributionApplication.class,args);
     }
+
 }
