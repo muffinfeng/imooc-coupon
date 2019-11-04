@@ -2,7 +2,10 @@ package com.imooc.coupon.entity;
 
 //优惠券(用户领取的优惠券记录)实体表
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.imooc.coupon.constant.CouponStatus;
+import com.imooc.coupon.converter.CouponStatusConverter;
+import com.imooc.coupon.serialization.CouponSerialize;
 import com.imooc.coupon.vo.CouponTemplateSDK;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +22,7 @@ import java.util.Date;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "coupon")
+@JsonSerialize(using = CouponSerialize.class)
 public class Coupon {
 
     //自增主键
@@ -48,6 +52,7 @@ public class Coupon {
     //basic是默认的，意思是这个字段属于coupon表,和Transient忽略这个字段相反
     @Basic
     @Column(name = "status", nullable = false)
+    @Convert(converter = CouponStatusConverter.class)
     private CouponStatus status;
 
     //用户优惠券对应的模板信息
