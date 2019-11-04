@@ -16,10 +16,10 @@ zuul:
   prefix: /imooc
   routes:
     #优惠券模板微服务器由配置定义
-  template:
-    path: /coupon-template/**
-    serviceId: eureka-client-coupon-template
-    strip-prefix: false
+    template:
+      path: /coupon-template/**    #网关访问的地址前缀
+      serviceId: eureka-client-coupon-template
+      strip-prefix: false
   host:
     connect-timeout-millis: 15000
     socket-timeout-millis: 60000

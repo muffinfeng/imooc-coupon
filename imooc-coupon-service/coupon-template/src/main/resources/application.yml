@@ -1,7 +1,7 @@
 server:
   port: 7001
   servlet:
-    context-path: /coupon-template
+    context-path: /coupon-template    #本地访问的地址前缀
 
 spring:
   application:
