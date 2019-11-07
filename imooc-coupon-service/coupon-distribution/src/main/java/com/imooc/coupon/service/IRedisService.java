@@ -31,7 +31,7 @@ public interface IRedisService {
     String tryToAcquireCouponCodeFromCache(Integer templateId);
 
     /**功能 3
-     * <h2>将优惠券保存到 Cache 中</h2>   用户领取优惠券
+     * <h2>将优惠券保存到 Cache 中</h2>
      * @param userId 用户 id
      * @param coupons {@link Coupon}s
      * @param status 优惠券状态
