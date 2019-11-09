@@ -71,6 +71,7 @@ public class KafkaServiceImpl implements IKafkaService {
         processCouponsByStatus(kafkaMessage,status);
     }
 
+    //kafka 更新优惠券状态
     private void processCouponsByStatus(CouponKafkaMessage kafkaMessage,
                                         CouponStatus status){
         List<Coupon> coupons = couponDao.findAllById(

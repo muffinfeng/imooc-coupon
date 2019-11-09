@@ -69,17 +69,24 @@ public class UserServiceImpl implements IUserService {
         List<Coupon> curCached = redisService.getCachedCoupons(userId, status);
         List<Coupon> preTarget;
 
+        /**
+         * 第一步，从redis中拿数据
+         */
         if(CollectionUtils.isNotEmpty(curCached)){
             log.debug("coupon cache is not empty: {} , {}",userId,status);
             preTarget = curCached;
         } else {
+            /**
+             * 第二步，若是redis中没有，则从db中拿数据
+             * 这时则要填充templateSDK字段
+             */
             log.debug("coupon cache is empty,get Coupon from db: {}, {}",
                     userId,status);
             List<Coupon> dbcoupons = couponDao.findAllByUserIdAndStatus(
                     userId, CouponStatus.of(status)
             );
             //如果数据库中没有记录，直接返回就可以，Cache 中已经加入了一张无效的优惠券
-            if(CollectionUtils.isNotEmpty(dbcoupons)){
+            if(CollectionUtils.isEmpty(dbcoupons)){
                 log.debug("current user do not have coupon: {} ,{}",userId,status);
                 return  dbcoupons;
             }
@@ -106,7 +113,11 @@ public class UserServiceImpl implements IUserService {
                 .filter(c -> c.getId() != -1)
                 .collect(Collectors.toList());
 
-        //如果当前获取的是可用优惠券,还需要做对已过期优惠券的延迟处理
+        /**
+         * 第三步，
+         * 如果当前获取的是可用优惠券,还需要做对已过期优惠券的延迟处理，并 通过kafka 修改db的优惠券状态
+         */
+        //
         if(CouponStatus.of(status) == CouponStatus.USABLE){
             CouponClassify classify = CouponClassify.classify(preTarget);
             //如果已过期状态的list不为空,需要做延迟处理
@@ -117,7 +128,7 @@ public class UserServiceImpl implements IUserService {
                         userId,classify.getExpired(),
                         CouponStatus.EXPIRED.getCode()
                 );
-                // 发送到 kafka 中做异步处理
+                // 发送到 kafka 中做异步处理,修改优惠券状态
                 kafkaTemplate.send(
                         Constant.TOPIC,
                         JSON.toJSONString(new CouponKafkaMessage(
@@ -147,7 +158,7 @@ public class UserServiceImpl implements IUserService {
         List<CouponTemplateSDK> templateSDKS =
                 templateClient.findAllUsableTemplate().getData();
 
-        log.debug("Find All Template(From TemplateClient) COunt: {}",
+        log.debug("Find All Template(From TemplateClient) Count: {}",
                 templateSDKS.size());
 
         //过滤过期的优惠券模板
