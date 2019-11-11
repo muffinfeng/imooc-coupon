@@ -13,14 +13,5 @@
         <module name="coupon-template" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="coupon-common" target="1.8" />
-      <module name="coupon-distribution" target="1.8" />
-      <module name="coupon-eureka" target="1.8" />
-      <module name="coupon-gateway" target="1.8" />
-      <module name="coupon-template" target="1.8" />
-      <module name="imooc-coupon" target="1.8" />
-      <module name="imooc-coupon-service" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
