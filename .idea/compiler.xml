@@ -10,6 +10,7 @@
         <module name="coupon-distribution" />
         <module name="coupon-eureka" />
         <module name="coupon-gateway" />
+        <module name="coupon-settlement" />
         <module name="coupon-template" />
       </profile>
     </annotationProcessing>
