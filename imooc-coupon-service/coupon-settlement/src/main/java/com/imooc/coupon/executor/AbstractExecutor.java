@@ -22,10 +22,12 @@ public class AbstractExecutor {
     @SuppressWarnings("all")
     protected boolean isGoodsTypeSatisfy(SettlementInfo settlement){
 
+        //settlement里所有的商品类型的id
         List<Integer> goodsType = settlement.getGoodsInfos()
                 .stream().map(GoodsInfo::getType)
                 .collect(Collectors.toList());
 
+        //优惠券里规定所优惠的商品类型id范围
         List<Integer> templateGoodsType = JSON.parseObject(
                 settlement.getCouponAndTemplateInfos().get(0).getTemplate()
                 .getRule().getUsage().getGoodsType(),
