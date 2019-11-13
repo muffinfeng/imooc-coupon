@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.xml.bind.SchemaOutputResolver;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 用户服务功能测试用例
@@ -44,4 +46,6 @@ public class UserServiceTest {
                 userService.findAvailableTemplate(fakeUserId)
         ));
     }
+
+
 }
